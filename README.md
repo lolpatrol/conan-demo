@@ -18,7 +18,7 @@ Add the repository in the Artifactory instance as a remote in Conan.
 
     conan remote add <some_name> <url>
 
-The url is on the form `http://<your_domain_and_possibly_port>/artifactory/api/conan/<name_of_repository>`, e.g. `https://localhost:49001/artifactory/api/conan/conan-packages.
+The url is on the form `http://<your_domain_and_possibly_port>/artifactory/api/conan/<name_of_repository>`, e.g. `https://localhost:49001/artifactory/api/conan/conan-packages`.
 
 On first time interacting with the remote, you'll be prompted for credentials.
 

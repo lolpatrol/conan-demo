@@ -1,13 +1,13 @@
 from conans import ConanFile, CMake
 
 
-class ProjectConan(ConanFile):
-    name = "project"
-    version = "0.1"
+class ApplicationConan(ConanFile):
+    name = "application"
+    version = "1.0"
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = "*"
-    requires = "sayhi/1.0@me/dev"
+    requires = "stringprinter/1.0@me/dev"
 
     def build(self):
         cmake = CMake(self)

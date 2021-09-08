@@ -2,6 +2,10 @@
 
 This small project shows how one can create and consume Conan packages as dependencies, and how Conan integrates with Artifactory to create an easily used environment for handling these dependencies.
 
+We'll have a main application, called... `application`, as well as two dependencies; `stringprovider` and `stringprinter`. The dependency tree looks like this:
+
+![dep tree](dep-tree.png)
+
 ## Artifactory
 
 Start an Artifactory instance, where we'll put our conan packages.
@@ -24,19 +28,19 @@ More on the Conan [`user`](https://docs.conan.io/en/latest/reference/commands/mi
 
 ### Build the dependencies
 
-We're starting from nothing so we'll have to first build and package the dependencies we're going to be using. These are the `givestring` and `sayhi` folders.
+We're starting from nothing so we'll have to first build and package the dependencies we're going to be using. These are the `stringprovider` and `stringprinter` folders.
 
 To create a Conan package, we run:
 
     conan create . <package_name>/<version>@<user>/channel
 
-So, building `givestring` could, e.g., be done with:
+So, building `stringprovider` could, e.g., be done with:
 
-    conan create . givestring/1.0@me/dev
+    conan create . stringprovider/1.0@me/dev
 
-And for `sayhi`, we'd have:
+And for `stringprinter`, we'd have:
 
-    conan create . sayhi/1.0@me/dev
+    conan create . stringprinter/1.0@me/dev
 
 ### Upload dependencies to Artifactory
 
@@ -50,12 +54,12 @@ To put the recipe(s) in our Artifactory repository, we can run:
 
 We can add in the argument `--all` in order to upload both recipe and package, giving:
 
-    conan upload givestring/1.0@me/dev --all -r conan-artifactory
-    conan upload sayhi/1.0@me/dev --all -r conan-artifactory
+    conan upload stringprovider/1.0@me/dev --all -r conan-artifactory
+    conan upload stringprinter/1.0@me/dev --all -r conan-artifactory
 
 ### Build the main application
 
-To build (and package) the main application, `project`, we can simply run the following:
+To build (and package) the main application, `application`, we can simply run the following:
 
     conan create . me/dev
 

@@ -10,4 +10,4 @@ class ProjectTestConan(ConanFile):
     def test(self):
         if not tools.cross_building(self):
             os.chdir("bin")
-            self.run(f".{os.sep}project")
+            self.run(f".{os.sep}application")

@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
-project(sayhi CXX)
+project(PackageTest CXX)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-add_library(sayhi src/sayhi.cpp)
-target_link_libraries(sayhi ${CONAN_LIBS})
-
-
+add_executable(example example.cpp)
+target_link_libraries(example ${CONAN_LIBS})

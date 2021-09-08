@@ -1,12 +1,13 @@
 from conans import ConanFile, CMake
 
 
-class GiveStringConan(ConanFile):
-    name = "givestring"
+class StringPrinterConan(ConanFile):
+    name = "stringprinter"
     #version = "0.1"
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = "*"
+    requires = "stringprovider/[>=1.0 <2.1]@me/dev"
 
     def build(self):
         cmake = CMake(self)
@@ -18,4 +19,4 @@ class GiveStringConan(ConanFile):
         self.copy("*.lib", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.libs = ["givestring"]
+        self.cpp_info.libs = ["stringprinter"]

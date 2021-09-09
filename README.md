@@ -4,13 +4,25 @@ This small project shows how one can create and consume Conan packages as depend
 
 We'll have a main application, called... `application`, as well as two dependencies; `stringprovider` and `stringprinter`. The dependency tree looks like this:
 
-![dep tree](dep-tree.png)
+![dep tree](docs/dep-tree.png)
 
 ## Artifactory
 
 Start an Artifactory instance, where we'll put our conan packages.
 
-    docker run --name conan-artifactory -d -p 49001:8081 -p 49002:8082 docker.bintray.io/jfrog/artifactory-cpp-ce:latest
+    docker run --name conan-artifactory -d -p 49001:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
+
+And if you want to mount a volume here:
+
+    # Using git-bash on Windows
+    docker run --name conan-artifactory -v $(pwd -W)/var:/var/opt/jfrog/artifactory -d -p 49001:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
+
+    # Others
+    docker run --name conan-artifactory $PWD/var:/var/opt/jfrog/artifactory -d -p 49001:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
+
+Or use the docker-compose file in the artifactory folder:
+
+    docker-compose up
 
 Create a new Conan repository.
 

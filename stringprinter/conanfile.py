@@ -3,11 +3,15 @@ from conans import ConanFile, CMake
 
 class StringPrinterConan(ConanFile):
     name = "stringprinter"
-    #version = "0.1"
+    # version = "0.1.0"
     settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False] }
+
+    exports_sources = "*" # Copy local sources instead of declaring source() method
+
+    # Dependencies, can also be declared in conanfile.txt
+    requires = "stringprovider/[>=0.1.0 <1.0.0]@lolpatrol/dev"
     generators = "cmake"
-    exports_sources = "*"
-    requires = "stringprovider/[>=1.0 <2.1]@me/dev"
 
     def build(self):
         cmake = CMake(self)
@@ -16,7 +20,9 @@ class StringPrinterConan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", src="src")
+        self.copy("*.a", dst="lib", keep_path=False)
         self.copy("*.lib", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ["stringprinter"]
+

@@ -1,5 +1,0 @@
-[requires]
-sayhi/0.2@lolpatrol/dev
-
-[generators]
-cmake

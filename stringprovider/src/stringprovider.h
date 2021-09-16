@@ -4,4 +4,3 @@
 std::string provideString();
 
 std::string provideAnotherString();
-

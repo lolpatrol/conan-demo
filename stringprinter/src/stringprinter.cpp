@@ -9,4 +9,3 @@ void printString() {
 void printAnotherString() {
     std::cout << provideAnotherString() << std::endl;
 }
-

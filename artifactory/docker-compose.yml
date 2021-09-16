@@ -1,8 +1,9 @@
 version: "3.6"
+
 services:
   artifactory-conan:
     image: releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
     ports:
-      - "47001:8081"
+      - "8081:8081"
     volumes:
       - "./var:/var/opt/jfrog/artifactory"

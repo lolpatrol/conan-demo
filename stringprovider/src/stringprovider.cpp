@@ -9,4 +9,3 @@ std::string provideString() {
 std::string provideAnotherString() {
     return "Hello again, world!";
 }
-

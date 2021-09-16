@@ -6,4 +6,3 @@ int main() {
     printAnotherString();
     return 0;
 }
-

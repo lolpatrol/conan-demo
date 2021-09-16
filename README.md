@@ -1,4 +1,4 @@
-# Example Conan project
+# Basic Conan demo
 
 This small project shows how one can create and consume Conan packages as dependencies, and how Conan integrates with Artifactory to create an easily used environment for handling these dependencies.
 
@@ -10,15 +10,15 @@ We'll have a main application, called... `application`, as well as two dependenc
 
 Start an Artifactory instance, where we'll put our conan packages.
 
-    docker run --name conan-artifactory -d -p 49001:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
+    docker run --name conan-artifactory -d -p 8081:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
 
 And if you want to mount a volume here:
 
     # Using git-bash on Windows
-    docker run --name conan-artifactory -v $(pwd -W)/var:/var/opt/jfrog/artifactory -d -p 49001:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
+    docker run --name conan-artifactory -v $(pwd -W)/var:/var/opt/jfrog/artifactory -d -p 8081:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
 
     # Others
-    docker run --name conan-artifactory $PWD/var:/var/opt/jfrog/artifactory -d -p 49001:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
+    docker run --name conan-artifactory $PWD/var:/var/opt/jfrog/artifactory -d -p 8081:8081 releases-docker.jfrog.io/jfrog/artifactory-cpp-ce:6.9.6
 
 Or use the docker-compose file in the artifactory folder:
 
@@ -30,7 +30,7 @@ Add the repository in the Artifactory instance as a remote in Conan.
 
     conan remote add <some_name> <url>
 
-The url is on the form `http://<your_domain_and_possibly_port>/artifactory/api/conan/<name_of_repository>`, e.g. `https://localhost:49001/artifactory/api/conan/conan-packages`.
+The url is on the form `http://<domain>/artifactory/api/conan/<repository>`, e.g. `https://localhost:8081/artifactory/api/conan/conan-packages`.
 
 On first time interacting with the remote, you'll be prompted for credentials.
 
@@ -48,11 +48,11 @@ To create a Conan package, we run:
 
 So, building `stringprovider` could, e.g., be done with:
 
-    conan create . stringprovider/1.0@me/dev
+    conan create . stringprovider/0.1.0@lolpatrol/dev
 
 And for `stringprinter`, we'd have:
 
-    conan create . stringprinter/1.0@me/dev
+    conan create . stringprinter/0.1.0@lolpatrol/dev
 
 ### Upload dependencies to Artifactory
 
@@ -66,14 +66,14 @@ To put the recipe(s) in our Artifactory repository, we can run:
 
 We can add in the argument `--all` in order to upload both recipe and package, giving:
 
-    conan upload stringprovider/1.0@me/dev --all -r conan-artifactory
-    conan upload stringprinter/1.0@me/dev --all -r conan-artifactory
+    conan upload stringprovider/0.1.0@lolpatrol/dev --all -r conan-artifactory
+    conan upload stringprinter/0.1.0@lolpatrol/dev --all -r conan-artifactory
 
 ### Build the main application
 
 To build (and package) the main application, `application`, we can simply run the following:
 
-    conan create . me/dev
+    conan create . 0.1.0@lolpatrol/dev
 
 and it will compile and run the test stuff under test_package.
 
@@ -84,4 +84,3 @@ If you prefer build it yourself, you can do some variation of:
     cmake .. && cmake --build . --config=Release
 
 We can also delete our local cache (`~/.conan/data`), and rerun this last bit, to see that it really fetches the packages from Artifactory.
-
